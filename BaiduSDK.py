@@ -115,7 +115,7 @@ def get_canonical_headers(headers):
 def sign(http_method, headers, path, params, timestamp=0, expiration_in_seconds=1800):
 
     #输入百度云账号的AccessKey和SecretKey
-    credentials = BceCredentials("c500bdd1ccd445f99a05961b6e0a27a1","063f91bc35c44d6b974e4f10e6e43ebb")
+    credentials = BceCredentials("YourAccessKey","YourSecretKey")
 
     headers = headers or {}
     params = params or {}
@@ -235,5 +235,5 @@ def updateRecord(domainName,ip,recordId):
 
 
 if __name__ == "__main__":
-    print getRecord("testsdk.sayers.top")
-    print addRecord("testsdk.sayers.top","4.4.4.4")
+    print getRecord("example.domain.com")
+    print addRecord("example.domain.com","4.4.4.4")
