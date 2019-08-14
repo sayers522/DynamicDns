@@ -1,28 +1,30 @@
 #!/usr/bin/python
+# -*- coding: UTF-8 -*-
 from json import load
 from urllib2 import urlopen
 import os,socket
+import BaiduSDK
 
-
-def updateDns(domain,new_ip):
-  print 'update Dns with API'
-  #调用域名服务商的API接口，更新DNS解析记录
-
-def getIpRecord(domain):
-  try:
-    addr = socket.getaddrinfo(domain, 'http')
-    old_ip = addr[0][4][0]
-  except:
-    old_ip = 'null'
-  return old_ip
+#def getIpRecord(domain):
+#  try:
+#    addr = socket.getaddrinfo(domain, 'http')
+#    old_ip = addr[0][4][0]
+#  except:
+#    old_ip = 'null'
+#  return old_ip
   
 
 def diffIp(domain):
-  new_ip = load(urlopen('http://jsonip.com'))['ip']
-  old_ip = getIpRecord(domain)
-  print old_ip,new_ip
-  if old_ip != new_ip:
-    updateDns(domain,new_ip)
+  my_ip = load(urlopen('http://jsonip.com'))['ip']
+  rid,rdata = BaiduSDK.getRecord(domain)
+  if rdata == "error":
+    print 'Failed Connect Dns Service'
+    return False
+  elif rdata == "none":
+    BaiduSDK.addRecord(domain,my_ip)
+  elif rdata != my_ip:
+    print rdata,my_ip
+    BaiduSDK.updateRecord(domain,my_ip,rid)
 
 if __name__ == '__main__':
-  diffIp('example.com')
+  diffIp('qnap1.sayers.top')
