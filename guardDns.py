@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 # -*- coding: UTF-8 -*-
 from json import load
 from urllib2 import urlopen
@@ -6,7 +6,7 @@ import BaiduSDK
 
 def diffIp(domain):
   #获取本机实时公网IP
-  my_ip = load(urlopen('http://jsonip.com'))['ip']
+  my_ip = urlopen('https://checkip.amazonaws.com/').read().strip()
 
   #调用百度云的域名sdk,获取域名对应的解析记录ID和解析IP地址
   rid,rdata = BaiduSDK.getRecord(domain)
